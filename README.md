@@ -12,3 +12,30 @@
 | Name         | Type    | Description |
 | ------------ | ------- | ----------- |
 |value         |     Object    |         this.functionName.bind(this) |
+
+
+```js
+  constructor(props){
+     super(props);
+     this.state = {
+        form : {
+           startDate : ""
+        }
+     }
+  }
+  .
+  .
+  .
+  
+  test( val ){
+    let form = this.state.form;
+    form[val.name] = val['value'];
+    this.setState({
+      form : form
+    })
+  }
+  
+  render(){
+    return <Datetime tiemSwitch="true" name="startDate" value={this.test.bind(this)}/>
+  }
+```
