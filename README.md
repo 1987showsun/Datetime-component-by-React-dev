@@ -13,6 +13,10 @@
 | ------------ | ------- | ----------- |
 |value         |     Object    |         this.functionName.bind(this) |
 
+```sh
+  import Datetime from './date';
+  import './calendar.scss';
+```
 
 ```js
   constructor(props){
