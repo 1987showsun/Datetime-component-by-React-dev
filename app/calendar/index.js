@@ -1,11 +1,13 @@
 import React,{ Component }                            from 'react';
 
+import './calendar.scss';
+
 export default class Datetime extends React.Component{
 
     constructor (props) {
         super(props);
         this.state = {
-          tiemSwitch           : props.tiemSwitch || false,
+          tiemSwitch           : props.tiemSwitch || "false",
           calendarWrapConState : "close",
           nowYear              : dateAction().nowYear,
           nowMonth             : dateAction().nowMonth,
@@ -27,7 +29,7 @@ export default class Datetime extends React.Component{
               day                  : dateAction().nowDate
             },
             date                 : `${dateAction().nowYear}-${dateAction().nowMonth}-${dateAction().nowDate}`,
-            value                : props.startDate || `${dateAction().nowYear}-${dateAction().nowMonth}-${dateAction().nowDate} ${dateAction().nowHrs}:${dateAction().nowMin}:${dateAction().nowSec}`
+            value                : props.startDate || setDate( props.tiemSwitch || "false" ),
           }
         }
     }
@@ -50,8 +52,6 @@ export default class Datetime extends React.Component{
         }
       })
     }
-
-    
 
     getMonthAllDate(nowYear,nowMonth,nowDate){
         let lastMonthTotalDay   = new Date(nowYear, nowMonth-1 , 0).getDate();
@@ -147,12 +147,15 @@ export default class Datetime extends React.Component{
         let selectedMin      = String(inputSet['time']['min']).length<2?  `0${inputSet['time']['min']}`  : `${inputSet['time']['min']}`;
         let selectedSec      = String(inputSet['time']['sec']).length<2?  `0${inputSet['time']['sec']}`  : `${inputSet['time']['sec']}`;
 
-
-        inputSet['date']     = `${selectedYear}-${selectedMonth}-${selectedDate}`;
-        inputSet['value']    = `${selectedYear}-${selectedMonth}-${selectedDate} ${selectedHrs}:${selectedMin}:${selectedSec}`;
         inputSet['dateArray']['year']     = `${selectedYear}`;
         inputSet['dateArray']['month']    = `${selectedMonth}`;
         inputSet['dateArray']['day']      = `${selectedDate}`;        
+        inputSet['date']     = `${selectedYear}-${selectedMonth}-${selectedDate}`;
+        if( this.state.tiemSwitch=="true" ){
+          inputSet['value']    = `${selectedYear}-${selectedMonth}-${selectedDate} ${selectedHrs}:${selectedMin}:${selectedSec}`;
+        }else{
+          inputSet['value']    = `${selectedYear}-${selectedMonth}-${selectedDate}`;
+        }
 
         nowPageMonthDate.map((nowPageMonthDateItem,i)=>{
           if( nowPageMonthDateItem['year']==item['year'] && nowPageMonthDateItem['month']==item['month'] && nowPageMonthDateItem['date']==item['date'] ){
@@ -222,7 +225,7 @@ export default class Datetime extends React.Component{
             <div className="calendar-wrap" ref={(input) => {this.focusInput = input}} onClick={this.calendarWrapConState.bind(this,"open")}>
       
                 <div className="input-box">
-                  <input type="text" name={this.state.inputSet['name']} value={this.state.inputSet['value']} onClick={this.handleClick.bind(this)} onChange={this.handleChange.bind(this)} />
+                  <input type="text" className="datetimeInput" name={this.state.inputSet['name']} value={this.state.inputSet['value']} onClick={this.handleClick.bind(this)} onChange={this.handleChange.bind(this)} disabled/>
                   <span className="input-box-icon far fa-calendar-alt"></span>
                 </div>
       
@@ -255,7 +258,7 @@ export default class Datetime extends React.Component{
                     }
                     </ul>
                     {
-                      this.state.tiemSwitch &&
+                      this.state.tiemSwitch=="true" &&
                         <ul className="time">
                           <li>
                               <div className="input-box">
@@ -312,6 +315,14 @@ const dateAction = () => {
         nowMin   : nowMin,
         nowSec   : nowSec
     }
+}
+
+const setDate = (tiemSwitch) => {
+  if( tiemSwitch=="true" ){
+    return `${dateAction().nowYear}-${dateAction().nowMonth}-${dateAction().nowDate} ${dateAction().nowHrs}:${dateAction().nowMin}:${dateAction().nowSec}`;
+  }else{
+    return `${dateAction().nowYear}-${dateAction().nowMonth}-${dateAction().nowDate}`;
+  }
 }
 
 const calculate = (dateType,btnType,val)=>{
