@@ -11,5 +11,4 @@
 ## return 
 | Name         | Type    | Description |
 | ------------ | ------- | ----------- |
-key                Type
-value              Object             this.functionName.bind(this);
+|value         |     Object    |         this.functionName.bind(this) |
