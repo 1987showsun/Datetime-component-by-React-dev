@@ -51,7 +51,7 @@
 ## Demo Image
 
 ### timeSwitch="false"
-![alt text](https://s3-ap-northeast-1.amazonaws.com/showtest/Users/showsun/datetime+git+img/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7+2018-06-23+%E4%B8%8A%E5%8D%881.45.04.png)
+![alt text](https://s3-ap-northeast-1.amazonaws.com/showtest/Users/showsun/datetime+git+img/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7+2018-06-23+%E4%B8%8A%E5%8D%881.45.04.png | width=280)
 
 ### timeSwitch="true"
-![alt text](https://s3-ap-northeast-1.amazonaws.com/showtest/Users/showsun/datetime+git+img/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7+2018-06-23+%E4%B8%8A%E5%8D%881.44.46.png)
+![alt text](https://s3-ap-northeast-1.amazonaws.com/showtest/Users/showsun/datetime+git+img/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7+2018-06-23+%E4%B8%8A%E5%8D%881.44.46.png | width=280)
