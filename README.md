@@ -2,6 +2,7 @@
 時間日期 React元件
 
 ## API
+| Name         | Type    | Description |
 key                Type               Description
 name               string             input name 
 tiemSwitch         boolean            select time switch
