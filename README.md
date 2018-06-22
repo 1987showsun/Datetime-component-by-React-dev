@@ -4,9 +4,8 @@
 ## API
 | Name         | Type    | Description |
 | ------------ | ------- | ----------- |
-key                Type               Description
-name               string             input name 
-tiemSwitch         boolean            select time switch
+| name         | string  | input name  |
+| tiemSwitch   | boolean | select time switch |
 
 
 ## return 
