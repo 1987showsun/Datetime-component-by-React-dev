@@ -23,6 +23,7 @@
         }
      }
   }
+  
   .
   .
   .
@@ -34,6 +35,10 @@
       form : form
     })
   }
+  
+  .
+  .
+  .
   
   render(){
     return <Datetime tiemSwitch="true" name="startDate" value={this.test.bind(this)}/>
