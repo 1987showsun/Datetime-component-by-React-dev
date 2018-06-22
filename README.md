@@ -3,11 +3,14 @@
 
 ## API
 | Name         | Type    | Description |
+| ------------ | ------- | ----------- |
 key                Type               Description
 name               string             input name 
 tiemSwitch         boolean            select time switch
 
 
 ## return 
+| Name         | Type    | Description |
+| ------------ | ------- | ----------- |
 key                Type
 value              Object             this.functionName.bind(this);
