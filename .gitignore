@@ -1,0 +1,11 @@
+*.log
+*.zip
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# node_modules
+node_modules/
+
+# dist
+dist/
