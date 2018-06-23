@@ -6,15 +6,24 @@
 | ------------ | ------- | ----------- |
 | name         | string  | input name  |
 | tiemSwitch   | boolean | select time switch |
+| max          | String  | ex:"2018-12-30" |
+| min          | String  | ex:"2018-01-01" |
 
 
-## callback 
+## Callback 
 | Name         | Type    | Description |
 | ------------ | ------- | ----------- |
 |value         |     Object    |         this.functionName.bind(this) |
 
+## Include 
 ```sh
   import Datetime from './calendar';
+```
+
+## Start
+```sh
+  npm run online;
+  http://localhost:8003 or http://0.0.0.0:8003
 ```
 
 ```js
