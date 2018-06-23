@@ -25,7 +25,7 @@ export default class Index extends React.Component{
       <div id="wrapper">
         <ul style={{ "display":"flex" }}>
           <li style={{ "display":"inline-flex", "marginRight":"10px" }}><Datetime tiemSwitch="true" name="startDate" value={this.test.bind(this)}/></li>
-          <li style={{ "display":"inline-flex" }}><Datetime tiemSwitch="false" name="endDate" value={this.test.bind(this)} max="2018-06-23"/></li>
+          <li style={{ "display":"inline-flex" }}><Datetime tiemSwitch="false" name="endDate" value={this.test.bind(this)} max="2018-06-20" min="2018-06-12"/></li>
         </ul>
       </div>
     );
