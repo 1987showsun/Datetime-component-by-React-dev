@@ -16,6 +16,8 @@ export default class Datetime extends React.Component{
           calendarHead         : ["日","一","二","三","四","五","六"],
           nowPageMonthDate     : [],
           selectedDate         : {},
+          dateRangeMax         : props.max,
+          dateRangeMin         : props.min,
           inputSet             : {
             name                 : props.name,
             time                 : {
@@ -65,14 +67,14 @@ export default class Datetime extends React.Component{
         for( let i=1 ; i <= startDay ; i++ ){
           let lastMonthDay = lastMonthTotalDay-(startDay-i);
           if( nowMonth==1 ){
-            renderTotalDayArray.push({year: nowYear, month: 12, date: lastMonthDay, selected: ""});
+            renderTotalDayArray.push({year: nowYear, month: 12, date: lastMonthDay, selected: "" , pointerEvents: ""});
           }else{
-            renderTotalDayArray.push({year: nowYear, month: nowMonth-1, date: lastMonthDay, selected: ""});
+            renderTotalDayArray.push({year: nowYear, month: nowMonth-1, date: lastMonthDay, selected: "", pointerEvents: ""});
           }
         }
     
         for( let i=1 ; i <= mowMonthtotalDay ; i++ ){
-          renderTotalDayArray.push({year: nowYear, month: nowMonth, date: i, selected: "" });
+          renderTotalDayArray.push({year: nowYear, month: nowMonth, date: i, selected: "", pointerEvents: "" });
         }
         
         if( endDay!=0 ){
@@ -83,7 +85,7 @@ export default class Datetime extends React.Component{
             nowMonth++;
           }
           for( let i=1 ; i <= (7-endDay) ; i++ ){
-            renderTotalDayArray.push({year: nowYear, month: nowMonth, date: i, selected: "" });
+            renderTotalDayArray.push({year: nowYear, month: nowMonth, date: i, selected: "", pointerEvents: "" });
           }
         }
     
@@ -92,10 +94,31 @@ export default class Datetime extends React.Component{
             item['selected'] = "nowDate";
           }
         })
-    
-        this.setState({
-          nowPageMonthDate  : renderTotalDayArray,
-        });
+        this.checkMaxAndMinDate(renderTotalDayArray);
+    }
+
+    checkMaxAndMinDate(renderTotalDayArray){
+      let dateRangeMin = this.state.dateRangeMin!=undefined? changeDateToValueOf(this.state.dateRangeMin) : "" ;
+      let dateRangeMax = this.state.dateRangeMax!=undefined? changeDateToValueOf(this.state.dateRangeMax) : "" ;
+
+      renderTotalDayArray.map((renderTotalDayArrayItem,i)=>{
+        let combinationItemDate     = `${renderTotalDayArrayItem['year']}-${renderTotalDayArrayItem['month']}-${renderTotalDayArrayItem['date']}`;
+        let returnItemDateValueOf   =  changeDateToValueOf( combinationItemDate );
+        if( dateRangeMin!="" ){
+          if( dateRangeMin>returnItemDateValueOf ){
+            renderTotalDayArrayItem['pointerEvents'] = "pointerEventsNone";
+          }
+        }
+        if( dateRangeMax!="" ){
+          if( dateRangeMax<returnItemDateValueOf ){
+            renderTotalDayArrayItem['pointerEvents'] = "pointerEventsNone";
+          }
+        }
+      })
+
+      this.setState({
+        nowPageMonthDate  : renderTotalDayArray,
+      });
     }
     
       changeMonth(btnType,dateType){
@@ -241,7 +264,7 @@ export default class Datetime extends React.Component{
                     <ul className="calendar calendar-head">
                     {
                         this.state.calendarHead.map((item,i)=>{
-                        return(<li key={i}>{item}</li>);
+                          return(<li key={i}>{item}</li>);
                         })
                     }
                     </ul>
@@ -250,7 +273,7 @@ export default class Datetime extends React.Component{
                     {
                         this.state.nowPageMonthDate.map((item,i)=>{
                         return(
-                            <li key={i} className={`${item['selected']}`} onClick={this.selectedDate.bind(this,item)}>
+                            <li key={i} className={`${item['selected']} ${item['pointerEvents']}`} onClick={this.selectedDate.bind(this,item)}>
                             {item.date}
                             </li>
                         );
@@ -356,4 +379,10 @@ const calculate = (dateType,btnType,val)=>{
   val = String(val).length<2? `0${val}` : `${val}`;
 
   return val;
+}
+
+const changeDateToValueOf = (dateVal) =>{
+  let date = new Date( dateVal );
+  return date.valueOf();
+  
 }
