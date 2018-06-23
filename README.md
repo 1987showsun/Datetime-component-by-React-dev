@@ -6,6 +6,8 @@
 | ------------ | ------- | ----------- |
 | name         | string  | input name  |
 | tiemSwitch   | boolean | select time switch |
+| max          | String  | ex:"2018-12-30" |
+| min          | String  | ex:"2018-01-01" |
 
 
 ## Callback 
