@@ -55,6 +55,13 @@ export default class Datetime extends React.Component{
       })
     }
 
+    componentWillReceiveProps(nextProps) {
+      this.setState({
+        dateRangeMax : nextProps.max,
+        dateRangeMin : nextProps.min
+      })
+    }
+
     getMonthAllDate(nowYear,nowMonth,nowDate){
         let lastMonthTotalDay   = new Date(nowYear, nowMonth-1 , 0).getDate();
         let mowMonthtotalDay    = new Date(nowYear, nowMonth   , 0).getDate();
@@ -94,31 +101,10 @@ export default class Datetime extends React.Component{
             item['selected'] = "nowDate";
           }
         })
-        this.checkMaxAndMinDate(renderTotalDayArray);
-    }
 
-    checkMaxAndMinDate(renderTotalDayArray){
-      let dateRangeMin = this.state.dateRangeMin!=undefined? changeDateToValueOf(this.state.dateRangeMin) : "" ;
-      let dateRangeMax = this.state.dateRangeMax!=undefined? changeDateToValueOf(this.state.dateRangeMax) : "" ;
-
-      renderTotalDayArray.map((renderTotalDayArrayItem,i)=>{
-        let combinationItemDate     = `${renderTotalDayArrayItem['year']}-${renderTotalDayArrayItem['month']}-${renderTotalDayArrayItem['date']}`;
-        let returnItemDateValueOf   =  changeDateToValueOf( combinationItemDate );
-        if( dateRangeMin!="" ){
-          if( dateRangeMin>returnItemDateValueOf ){
-            renderTotalDayArrayItem['pointerEvents'] = "pointerEventsNone";
-          }
-        }
-        if( dateRangeMax!="" ){
-          if( dateRangeMax<returnItemDateValueOf ){
-            renderTotalDayArrayItem['pointerEvents'] = "pointerEventsNone";
-          }
-        }
-      })
-
-      this.setState({
-        nowPageMonthDate  : renderTotalDayArray,
-      });
+        this.setState({
+          nowPageMonthDate  : renderTotalDayArray,
+        });
     }
     
       changeMonth(btnType,dateType){
@@ -243,6 +229,30 @@ export default class Datetime extends React.Component{
       })
     }
 
+    retrunCalendar(){
+      const dateRangeMax        = this.state.dateRangeMax!=undefined? changeDateToValueOf(this.state.dateRangeMax) : "";
+      const dateRangeMin        = this.state.dateRangeMin!=undefined? changeDateToValueOf(this.state.dateRangeMin) : "";
+      const renderTotalDayArray = this.state.nowPageMonthDate;
+      
+      renderTotalDayArray.map((renderTotalDayArrayItem,i)=>{
+        let combinationItemDate     = `${renderTotalDayArrayItem['year']}-${renderTotalDayArrayItem['month']}-${renderTotalDayArrayItem['date']}`;
+        let returnItemDateValueOf   =  changeDateToValueOf( combinationItemDate );
+        renderTotalDayArrayItem['pointerEvents'] = "";
+        if( dateRangeMin!="" ){
+          if( dateRangeMin>returnItemDateValueOf ){
+            renderTotalDayArrayItem['pointerEvents'] = "pointerEventsNone";
+          }
+        }
+        if( dateRangeMax!="" ){
+          if( dateRangeMax<returnItemDateValueOf ){
+            renderTotalDayArrayItem['pointerEvents'] = "pointerEventsNone";
+          }
+        }
+      })
+
+      return renderTotalDayArray;
+    }
+
     render(){
         return(
             <div className="calendar-wrap" ref={(input) => {this.focusInput = input}} onClick={this.calendarWrapConState.bind(this,"open")}>
@@ -254,11 +264,11 @@ export default class Datetime extends React.Component{
       
                 <div className={`calendar-wrap-con ${this.state.calendarWrapConState}`} onClick={this.calendarWrapConState.bind(this,"open")}>
                     <div className="calendar-tool">
-                        <button className="fas fa-angle-double-left" onClick={this.changeMonth.bind(this,"prev","year")}></button>
-                        <button className="fas fa-chevron-left" onClick={this.changeMonth.bind(this,"prev","month")}></button>
+                        <span className="fas fa-angle-double-left" onClick={this.changeMonth.bind(this,"prev","year")}></span>
+                        <span className="fas fa-chevron-left" onClick={this.changeMonth.bind(this,"prev","month")}></span>
                         <div className="showNowMonth">{`${this.state.nowYear} / ${this.state.nowMonth}`}</div>
-                        <button className="fas fa-chevron-right" onClick={this.changeMonth.bind(this,"next","month")}></button>
-                        <button className="fas fa-angle-double-right" onClick={this.changeMonth.bind(this,"next","year")}></button>
+                        <span className="fas fa-chevron-right" onClick={this.changeMonth.bind(this,"next","month")}></span>
+                        <span className="fas fa-angle-double-right" onClick={this.changeMonth.bind(this,"next","year")}></span>
                     </div>
         
                     <ul className="calendar calendar-head">
@@ -271,13 +281,13 @@ export default class Datetime extends React.Component{
         
                     <ul className="calendar calendar-body">
                     {
-                        this.state.nowPageMonthDate.map((item,i)=>{
+                      this.retrunCalendar().map((item,i)=>{
                         return(
-                            <li key={i} className={`${item['selected']} ${item['pointerEvents']}`} onClick={this.selectedDate.bind(this,item)}>
+                          <li key={i} className={`${item['selected']} ${item['pointerEvents']}`} onClick={this.selectedDate.bind(this,item)}>
                             {item.date}
-                            </li>
+                          </li>
                         );
-                        })
+                      })
                     }
                     </ul>
                     {
@@ -287,8 +297,8 @@ export default class Datetime extends React.Component{
                               <div className="input-box">
                               <input type="text" name="hrs" value={this.state.inputSet['time']['hrs']} onChange={this.handleChangeTime.bind(this)} />
                               <div className="timeAction">
-                                  <button className="up fas fa-chevron-up" onClick={ this.changeTime.bind(this,"hrs","up") }></button>
-                                  <button className="dowm fas fa-chevron-down" onClick={ this.changeTime.bind(this,"hrs","down") }></button>
+                                  <span className="up fas fa-chevron-up" onClick={ this.changeTime.bind(this,"hrs","up") }></span>
+                                  <span className="dowm fas fa-chevron-down" onClick={ this.changeTime.bind(this,"hrs","down") }></span>
                               </div>
                               </div>
                           </li>
@@ -297,8 +307,8 @@ export default class Datetime extends React.Component{
                               <div className="input-box">
                               <input type="text" name="min" value={this.state.inputSet['time']['min']} onChange={this.handleChangeTime.bind(this)} />
                               <div className="timeAction">
-                                  <button className="up fas fa-chevron-up" onClick={this.changeTime.bind(this,"min","up")}></button>
-                                  <button className="dowm fas fa-chevron-down" onClick={this.changeTime.bind(this,"min","down")}></button>
+                                  <span className="up fas fa-chevron-up" onClick={this.changeTime.bind(this,"min","up")}></span>
+                                  <span className="dowm fas fa-chevron-down" onClick={this.changeTime.bind(this,"min","down")}></span>
                               </div>
                               </div>
                           </li>
@@ -307,8 +317,8 @@ export default class Datetime extends React.Component{
                               <div className="input-box">
                               <input type="text" name="sec" value={this.state.inputSet['time']['sec']} onChange={this.handleChangeTime.bind(this)} />
                               <div className="timeAction">
-                                  <button className="up fas fa-chevron-up" onClick={this.changeTime.bind(this,"sec","up")}></button>
-                                  <button className="dowm fas fa-chevron-down" onClick={this.changeTime.bind(this,"sec","down")}></button>
+                                  <span className="up fas fa-chevron-up" onClick={this.changeTime.bind(this,"sec","up")}></span>
+                                  <span className="dowm fas fa-chevron-down" onClick={this.changeTime.bind(this,"sec","down")}></span>
                               </div>
                               </div>
                           </li>

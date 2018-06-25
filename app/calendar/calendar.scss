@@ -55,6 +55,7 @@
         background    : #fff; 
         border-radius : 5px;
         position      : absolute;
+        z-index       : 10;
         top           : 40px;
         left          : 0px;
         &.close{
@@ -74,11 +75,14 @@
             .showNowMonth,button{
                 height        : 100%;
             }
-            button{
-                width     : 20px;
-                border    : none;
-                background: transparent;
-                cursor    : pointer;
+            span{
+                width            : 20px;
+                border           : none;
+                background       : transparent;
+                cursor           : pointer;
+                display          : flex;
+                align-items      : center;
+                justify-content  : center;
             }
             .showNowMonth{
                 width: 150px;
@@ -118,19 +122,23 @@
                     opacity        : 0.3; 
                 }
             }
+            &.calendar-head{
+                color: #f36;
+                font-weight: 800;
+            }
             &.calendar-body{
                 >li{
                     cursor: pointer;
                     &:hover{
                         &:before{
-                            content: "";
-                            width: 25px;
-                            height: 25px;
-                            border-radius: 100px;
-                            background: #ccc;
-                            position: absolute;
-                            z-index: -1;
-                            background: #ececec;
+                            content       : "";
+                            width         : 25px;
+                            height        : 25px;
+                            border-radius : 100px;
+                            background    : #ccc;
+                            position      : absolute;
+                            z-index       : -1;
+                            background    : #ececec;
                         }
                     }
                 }
@@ -144,7 +152,7 @@
             padding-top      : 10px;
             border-top       : 1px solid #ccc;  
             >li{
-                display        : inline-flex;
+                display          : inline-flex;
                 &.timeNull{
                     width            : 30px;
                     padding-top      : 4px;
@@ -165,10 +173,13 @@
                 right           : 0px;
                 display         : flex;
                 flex-direction  : column;
-                button{
+                span{
                     width         : 100%;
                     height        : 100%;
                     font-size     : 0.5em;
+                    display       : flex;
+                    align-items   : center;
+                    justify-content: center;  
                     cursor        : pointer;
                     transition    : all .3s;
                     background    : #ff8821;

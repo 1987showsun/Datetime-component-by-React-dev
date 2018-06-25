@@ -13,6 +13,10 @@ export default class Index extends React.Component{
     super(props);
     let date                = new Date();
     this.state = {
+      formInput : {
+        startDate2 : "",
+        endDate2   : "",
+      }
     }
   }
 
@@ -20,12 +24,24 @@ export default class Index extends React.Component{
     //console.log(dddd)
   }
 
+  test2( value ){
+    let formInput = this.state.formInput;
+    formInput[ value['name'] ] = value['date'];
+    this.setState({
+      formInput : formInput
+    })
+  }
+
   render(){
     return(
       <div id="wrapper">
-        <ul style={{ "display":"flex" }}>
+        <ul style={{ "display":"flex","marginBottom":"60px" }}>
           <li style={{ "display":"inline-flex", "marginRight":"10px" }}><Datetime tiemSwitch="true" name="startDate" value={this.test.bind(this)}/></li>
           <li style={{ "display":"inline-flex" }}><Datetime tiemSwitch="false" name="endDate" value={this.test.bind(this)} max="2018-06-20" min="2018-06-12"/></li>
+        </ul>
+        <ul style={{ "display":"flex" }}>
+          <li style={{ "display":"inline-flex", "marginRight":"10px" }}><Datetime tiemSwitch="true" name="startDate2" value={this.test2.bind(this)} max={this.state.formInput['endDate2']}/></li>
+          <li style={{ "display":"inline-flex" }}><Datetime tiemSwitch="false" name="endDate2" value={this.test2.bind(this)} min={this.state.formInput['startDate2']}/></li>
         </ul>
       </div>
     );
