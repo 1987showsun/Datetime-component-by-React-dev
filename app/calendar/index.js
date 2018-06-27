@@ -43,7 +43,7 @@ export default class Datetime extends React.Component{
       let nowDate             = this.state.nowDate;
       let _this               = this;
       this.getMonthAllDate(nowYear,nowMonth,nowDate);
-      this.props.value(inputSet);
+      this.props.callBackReturn(inputSet);
 
       $('html').on({
         click : function(e){
@@ -173,7 +173,7 @@ export default class Datetime extends React.Component{
             nowPageMonthDateItem['selected'] = "";
           }
         })
-        this.props.value(inputSet);
+        this.props.callBackReturn(inputSet);
         this.setState({
           combinationDate  : `${selectedYear}-${selectedMonth}-${selectedDate}`,
           inputSet         : inputSet,
@@ -190,7 +190,7 @@ export default class Datetime extends React.Component{
       let name          = e.target.name;
       let value         = e.target.value;
       inputSet["value"] = value;
-      this.props.value(inputSet);
+      this.props.callBackReturn(inputSet);
     }
     
     handleChangeTime(e){
@@ -204,7 +204,7 @@ export default class Datetime extends React.Component{
       inputSet['time'][name] = value;
       inputSet['value']  =`${combinationDate} ${inputSet['time']['hrs']}:${inputSet['time']['min']}:${inputSet['time']['sec']}`;
       
-      this.props.value(inputSet);
+      this.props.callBackReturn(inputSet);
       this.setState({
         inputSet  : inputSet
       })
@@ -217,7 +217,7 @@ export default class Datetime extends React.Component{
       let resultVal       = calculate(dateType,btnType,val);
       inputSet['time'][dateType] = resultVal;
       inputSet['value']  =`${combinationDate} ${inputSet['time']['hrs']}:${inputSet['time']['min']}:${inputSet['time']['sec']}`;
-      this.props.value(inputSet);
+      this.props.callBackReturn(inputSet);
       this.setState({
         inputSet : inputSet
       });
