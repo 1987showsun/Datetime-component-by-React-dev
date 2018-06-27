@@ -53,7 +53,7 @@
   .
   
   render(){
-    return <Datetime tiemSwitch="true" name="startDate" value={this.test.bind(this)}/>
+    return <Datetime tiemSwitch="true" name="startDate" callBackReturn={this.test.bind(this)}/>
   }
 ```
 
